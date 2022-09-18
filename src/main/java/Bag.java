@@ -13,6 +13,10 @@ public abstract class Bag {
      *       - an int named capacity
      *       - an array of Strings named contents
      */
+    private String color;
+    private int numberOfContents;
+    private int capacity;
+    private String[] contents;
 
 
 
@@ -27,7 +31,12 @@ public abstract class Bag {
      * its contents.)
      */
 
-
+    public Bag(String color, int capacity){
+        this.color = color;
+        this.capacity = capacity;
+        this.numberOfContents = 0;
+        this.contents = new String[0];
+    }
 
 
     /*
@@ -37,7 +46,15 @@ public abstract class Bag {
      *           - getNumberOfContents
      *           - getCapacity
      */
-
+    public String getColor(){
+        return this.color;
+    }
+    public int getNumberOfContents(){
+        return this.contents.length;
+    }
+    public int getCapacity(){
+        return this.capacity;
+    }
 
 
 
@@ -45,6 +62,10 @@ public abstract class Bag {
      * TODO: Create a setter function called setColor which sets the
      *       color of this bag to the given color.
      */
+    public void setColor(String newColor){
+        color = newColor;
+    }
+
 
 
 
@@ -60,6 +81,21 @@ public abstract class Bag {
      *       This method should return true if the item was added
      *       and false otherwise.
      */
+    public boolean addItem(String item){
+        if(numberOfContents < capacity){
+            numberOfContents += 1;
+            String newBag[] = new String[contents.length + 1];
+            for(int i = 0; i < contents.length; i++){
+                newBag[i] = contents[i];
+            }
+            newBag[contents.length] = item;
+            contents = newBag;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
 
 
@@ -73,9 +109,22 @@ public abstract class Bag {
      *
      * If there are no items in this Bag, return null.
      *
-     * @return
+     * @return The last item of the Bag
      */
-
+    public String popItem(){
+        if(numberOfContents == 0){
+            return null;
+        }
+        else{
+            String lastItem = contents[numberOfContents-1];
+            String[] newBag = new String[numberOfContents-1];
+            for(int i = 0; i < numberOfContents - 1; i++){
+                newBag[i] = contents[i];
+            }
+            contents = newBag;
+            return lastItem;
+        }
+    }
 
 
 
@@ -87,7 +136,7 @@ public abstract class Bag {
      */
     public void increaseCapacity(int n) {
         // TODO: Implement this method.
-
+        capacity += n;
     }
 
     /**
@@ -95,7 +144,7 @@ public abstract class Bag {
      * This method requires you to have created the private
      * instance variables mentioned above.
      *
-     * @return
+     * @return a string representation of the bag
      */
     @Override
     public String toString() {
