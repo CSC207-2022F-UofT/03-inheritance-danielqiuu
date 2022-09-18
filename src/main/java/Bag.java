@@ -35,7 +35,7 @@ public abstract class Bag {
         this.color = color;
         this.capacity = capacity;
         this.numberOfContents = 0;
-        this.contents = new String[0];
+        this.contents = new String[capacity];
     }
 
 
@@ -50,7 +50,7 @@ public abstract class Bag {
         return this.color;
     }
     public int getNumberOfContents(){
-        return this.contents.length;
+        return this.numberOfContents;
     }
     public int getCapacity(){
         return this.capacity;
@@ -83,13 +83,9 @@ public abstract class Bag {
      */
     public boolean addItem(String item){
         if(numberOfContents < capacity){
+            contents[numberOfContents] = item;
             numberOfContents += 1;
-            String newBag[] = new String[contents.length + 1];
-            for(int i = 0; i < contents.length; i++){
-                newBag[i] = contents[i];
-            }
-            newBag[contents.length] = item;
-            contents = newBag;
+
             return true;
         }
         else{
@@ -116,12 +112,9 @@ public abstract class Bag {
             return null;
         }
         else{
-            String lastItem = contents[numberOfContents-1];
-            String[] newBag = new String[numberOfContents-1];
-            for(int i = 0; i < numberOfContents - 1; i++){
-                newBag[i] = contents[i];
-            }
-            contents = newBag;
+            String lastItem = contents[numberOfContents - 1];
+            contents[numberOfContents - 1] = null;
+            numberOfContents -= 1;
             return lastItem;
         }
     }
@@ -137,6 +130,11 @@ public abstract class Bag {
     public void increaseCapacity(int n) {
         // TODO: Implement this method.
         capacity += n;
+        String[] newBag = new String[capacity];
+        for(int i = 0; i < contents.length; i++){
+            newBag[i] = contents[i];
+        }
+        contents = newBag;
     }
 
     /**
